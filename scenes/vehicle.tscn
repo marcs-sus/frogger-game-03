@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bqnn2mlbxc2tj"]
+
+[ext_resource type="Script" uid="uid://dve3awdgjutt3" path="res://scripts/Vehicle.cs" id="1_d0fkt"]
+[ext_resource type="Texture2D" uid="uid://drfud1qw41jny" path="res://assets/cars.png" id="1_pu4i8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pu4i8"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0fkt"]
+atlas = ExtResource("1_pu4i8")
+region = Rect2(0, 0, 32, 32)
+
+[node name="Vehicle" type="Area2D" unique_id=547856908]
+script = ExtResource("1_d0fkt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=989808742]
+shape = SubResource("RectangleShape2D_pu4i8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=409969272]
+texture = SubResource("AtlasTexture_d0fkt")
