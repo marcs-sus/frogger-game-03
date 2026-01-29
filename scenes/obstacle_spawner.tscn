@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bt77be0gv3oa6"]
+
+[ext_resource type="Script" uid="uid://ciw6ribl77oyh" path="res://scripts/ObstacleSpawner.cs" id="1_vyba0"]
+
+[node name="ObstacleSpawner" type="Marker2D" unique_id=1152471115]
+script = ExtResource("1_vyba0")
