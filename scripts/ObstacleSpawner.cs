@@ -26,13 +26,26 @@ public partial class ObstacleSpawner : Marker2D
 		// Check if it's time to spawn a new obstacle
 		if (spawnTimer <= 0)
 		{
-			SpawnObstacle();
-			spawnTimer = SpawnInterval;
+			// Spawn a single obstacle
+			if (ObstacleLength == 1)
+			{
+				SpawnObstacle();
+				spawnTimer = SpawnInterval;
+				return;
+			}
+
+			// Spawn multiple obstacles
+			for (int i = 0; i < ObstacleLength; i++)
+			{
+				SpawnObstacle(Globals.TILE_SIZE * i);
+			}
+
+			spawnTimer = SpawnInterval * ObstacleLength;
 		}
 	}
 
 	// Instantiate a new obstacle with the assigned scene
-	public void SpawnObstacle()
+	public void SpawnObstacle(float offset = 0f)
 	{
 		if (ObstaclePool == null || ObstaclePool.pool.Count <= 0)
 		{
@@ -48,6 +61,7 @@ public partial class ObstacleSpawner : Marker2D
 		}
 
 		// Set the obstacle's direction and ownership
+		obstacle.Position += new Vector2(offset, 0);
 		obstacle.Direction = SpawnDirection.Normalized();
 		obstacle.spawnerParent = this;
 
