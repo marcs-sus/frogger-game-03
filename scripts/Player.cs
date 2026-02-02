@@ -5,9 +5,11 @@ public partial class Player : CharacterBody2D
 {
 	[Export] private float Speed = 200f;
 	[Export] public Area2D WorldBorder;
+	[Export] public Area2D WaterArea;
 
 	private AnimatedSprite2D animatedSprite => GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 	private Rect2 WorldBorderRect => WorldBorder.GetNode<CollisionShape2D>("CollisionShape2D").GetShape().GetRect();
+	private Rect2 WaterRect => WaterArea.GetNode<CollisionShape2D>("CollisionShape2D").GetShape().GetRect();
 
 	private Vector2 targetPosition;
 	private bool isMoving = false;
@@ -26,6 +28,10 @@ public partial class Player : CharacterBody2D
 			// Move towards target position
 			Position = Position.MoveToward(targetPosition, Speed * (float)delta);
 
+			// Do not move inside water
+			if (WaterRect.HasPoint(Position - WaterArea.Position))
+				Die();
+
 			// Check if reached target position
 			if (Position == targetPosition)
 				isMoving = false;
@@ -38,22 +44,22 @@ public partial class Player : CharacterBody2D
 
 		// Handle movement input
 		if (@event.IsActionPressed("up"))
-			Move(Vector2.Up);
+			TryMove(Vector2.Up);
 		else if (@event.IsActionPressed("down"))
-			Move(Vector2.Down);
+			TryMove(Vector2.Down);
 		else if (@event.IsActionPressed("left"))
-			Move(Vector2.Left);
+			TryMove(Vector2.Left);
 		else if (@event.IsActionPressed("right"))
-			Move(Vector2.Right);
+			TryMove(Vector2.Right);
 	}
 
-	private void Move(Vector2 direction)
+	private void TryMove(Vector2 direction)
 	{
 		// Calculate new target position and rotation
 		targetPosition = Position + direction * Globals.TILE_SIZE;
 
 		// Do not move outside world border
-		if (WorldBorderRect.HasPoint(targetPosition) == false)
+		if (!WorldBorderRect.HasPoint(targetPosition))
 			return;
 
 		Rotation = direction.Angle() + Mathf.Pi / 2;
@@ -63,5 +69,10 @@ public partial class Player : CharacterBody2D
 		animatedSprite.Play("hop");
 
 		isMoving = true;
+	}
+
+	public void Die()
+	{
+		QueueFree(); // Temporary
 	}
 }

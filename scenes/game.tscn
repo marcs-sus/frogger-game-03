@@ -25,6 +25,9 @@ sources/0 = SubResource("TileSetAtlasSource_lbhrr")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
 size = Vector2(416, 448)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u5sy4"]
+size = Vector2(416, 160)
+
 [node name="Game" type="Node2D" unique_id=2015361136]
 script = ExtResource("1_uwrxv")
 
@@ -42,15 +45,24 @@ tile_set = SubResource("TileSet_yqjtg")
 visible = false
 shape = SubResource("RectangleShape2D_lnu2h")
 
+[node name="WaterArea" type="Area2D" parent="." unique_id=1804748784]
+position = Vector2(0, -80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterArea" unique_id=794375352]
+visible = false
+shape = SubResource("RectangleShape2D_u5sy4")
+
 [node name="VehicleSpawners" type="Node" parent="." unique_id=1093845929]
 
 [node name="VehicleSpawner1" parent="VehicleSpawners" unique_id=1152471115 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(320, 176)
 ObstaclePool = NodePath("../../Pools/VehiclesPool")
+SpawnInterval = 5.0
 
 [node name="VehicleSpawner2" parent="VehicleSpawners" unique_id=152998907 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(320, 112)
 ObstaclePool = NodePath("../../Pools/VehiclesPool")
+SpawnInterval = 3.0
 
 [node name="VehicleSpawner3" parent="VehicleSpawners" unique_id=588473868 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(320, 48)
@@ -59,12 +71,13 @@ ObstaclePool = NodePath("../../Pools/VehiclesPool")
 [node name="VehicleSpawner4" parent="VehicleSpawners" unique_id=61286348 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(-320, 144)
 ObstaclePool = NodePath("../../Pools/VehiclesPool")
-SpawnDirection = Vector2(1, 0)
+SpawnDirection = 1
 
 [node name="VehicleSpawner5" parent="VehicleSpawners" unique_id=512840393 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(-320, 80)
 ObstaclePool = NodePath("../../Pools/VehiclesPool")
-SpawnDirection = Vector2(1, 0)
+SpawnDirection = 1
+SpawnInterval = 4.0
 
 [node name="TurtleSpawner" type="Node" parent="." unique_id=402576961]
 
@@ -75,9 +88,10 @@ ObstacleLength = 3
 SpawnInterval = 1.5
 
 [node name="TurtleSpawner2" parent="TurtleSpawner" unique_id=1764470670 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
-position = Vector2(320, -112)
+position = Vector2(-320, -112)
 ObstaclePool = NodePath("../../Pools/TurtlesPool")
 ObstacleLength = 2
+SpawnDirection = 1
 
 [node name="Pools" type="Node" parent="." unique_id=777411706]
 
@@ -89,6 +103,7 @@ PoolSize = 40
 ObstacleScene = ExtResource("6_u5sy4")
 PoolSize = 30
 
-[node name="Player" parent="." unique_id=2107113222 node_paths=PackedStringArray("WorldBorder") instance=ExtResource("2_yqjtg")]
+[node name="Player" parent="." unique_id=2107113222 node_paths=PackedStringArray("WorldBorder", "WaterArea") instance=ExtResource("2_yqjtg")]
 position = Vector2(0, 208)
 WorldBorder = NodePath("../WorldBorder")
+WaterArea = NodePath("../WaterArea")

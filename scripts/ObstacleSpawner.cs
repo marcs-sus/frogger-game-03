@@ -1,11 +1,19 @@
 using Godot;
 using System;
+using System.Net.Security;
+
+public enum Direction
+{
+	Right = 1,
+	Left = -1,
+}
 
 public partial class ObstacleSpawner : Marker2D
 {
 	[Export] public ObstaclePool ObstaclePool;
 	[Export] public byte ObstacleLength = 1;
-	[Export] public Vector2 SpawnDirection = Vector2.Left;
+	[Export] public float ObstacleSpeed = 50f;
+	[Export] public Direction SpawnDirection = Direction.Left;
 	[Export] public float SpawnInterval = 2.0f;
 	[Export] public float ObstaclesMaxLifetime = 15.0f;
 
@@ -62,7 +70,8 @@ public partial class ObstacleSpawner : Marker2D
 
 		// Set the obstacle's direction and ownership
 		obstacle.Position += new Vector2(offset, 0);
-		obstacle.Direction = SpawnDirection.Normalized();
+		obstacle.Direction = new Vector2((float)SpawnDirection, 0);
+		obstacle.Speed = ObstacleSpeed;
 		obstacle.spawnerParent = this;
 
 		AddChild(obstacle);

@@ -3,10 +3,9 @@ using System;
 
 public partial class Obstacle : Area2D
 {
-    [Export] public float Speed = 50;
-    [Export] public Vector2 Direction = Vector2.Left;
-
     public ObstacleSpawner spawnerParent;
+    public Vector2 Direction = Vector2.Left;
+    public float Speed = 50f;
     public float lifetime = 0f;
 
     // Called when the node enters the scene tree for the first time.
@@ -35,8 +34,10 @@ public partial class Obstacle : Area2D
     // Reset obstacle properties for reuse
     public void Reset()
     {
-        lifetime = 0f;
         spawnerParent = null;
+        Direction = Vector2.Left;
+        Speed = 50f;
+        lifetime = 0f;
         Position = Vector2.Zero;
     }
 }

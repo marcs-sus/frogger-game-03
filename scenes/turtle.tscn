@@ -46,7 +46,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 2.0
+"speed": 3.0
 }]
 
 [node name="Turtle" type="Area2D" unique_id=86578308]
@@ -58,4 +58,4 @@ shape = SubResource("RectangleShape2D_1l2iw")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1426358817]
 sprite_frames = SubResource("SpriteFrames_bc3fs")
 autoplay = "default"
-frame_progress = 0.40910217
+frame_progress = 0.11499406

@@ -24,4 +24,13 @@ public partial class Vehicle : Obstacle
 		type = vehicleType;
 		Direction = direction.Normalized();
 	}
+
+	// Kill player if its body enters the vehicle area
+	private void _OnBodyEntered(Node2D body)
+	{
+		if (body is Player player)
+		{
+			player.Die();
+		}
+	}
 }
