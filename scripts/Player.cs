@@ -9,10 +9,13 @@ public partial class Player : CharacterBody2D
 
 	private AnimatedSprite2D animatedSprite => GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 	private Rect2 WorldBorderRect => WorldBorder.GetNode<CollisionShape2D>("CollisionShape2D").GetShape().GetRect();
-	private Rect2 WaterRect => WaterArea.GetNode<CollisionShape2D>("CollisionShape2D").GetShape().GetRect();
 
 	private Vector2 targetPosition;
-	private bool isMoving = false;
+	private bool isHopping = false;
+	public float platformSpeed = 0f;
+	public Vector2 platformDirection = Vector2.Zero;
+	public bool inWater = false;
+	public short platformCount = 0;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -23,24 +26,33 @@ public partial class Player : CharacterBody2D
 	// Called every physics frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		if (isMoving)
+		// Handle hopping movement
+		if (isHopping)
 		{
 			// Move towards target position
 			Position = Position.MoveToward(targetPosition, Speed * (float)delta);
 
-			// Do not move inside water
-			if (WaterRect.HasPoint(Position - WaterArea.Position))
-				Die();
-
 			// Check if reached target position
 			if (Position == targetPosition)
-				isMoving = false;
+				isHopping = false;
+		}
+		// Handle movement on platforms
+		else if (platformCount > 0)
+		{
+			// Move along with platform
+			Position += platformDirection.Normalized() * platformSpeed * (float)delta;
+		}
+		// Check for water death
+		else if (inWater)
+		{
+			GD.Print("Died");
+			Die();
 		}
 	}
 
 	public override void _Input(InputEvent @event)
 	{
-		if (isMoving) return;
+		if (isHopping) return;
 
 		// Handle movement input
 		if (@event.IsActionPressed("up"))
@@ -68,7 +80,7 @@ public partial class Player : CharacterBody2D
 		// Play hop animation
 		animatedSprite.Play("hop");
 
-		isMoving = true;
+		isHopping = true;
 	}
 
 	public void Die()

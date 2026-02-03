@@ -1,39 +1,35 @@
 using Godot;
 using System;
 
-public partial class Turtle : Obstacle
+public partial class WaterArea : Area2D
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		base._Ready();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		base._Process(delta);
 	}
 
-	// Check if player is on turtle
+	// Check if player entered water area
 	private void _OnBodyEntered(Node2D body)
 	{
 		if (body is Player player)
 		{
-			player.platformCount++;
-			player.platformDirection = Direction;
-			player.platformSpeed = Speed;
-			GD.Print("Player moved onto turtle");
+			player.inWater = true;
+			GD.Print("Player in water area");
 		}
 	}
 
-	// Check if player left turtle
+	// Check if player exited water area
 	private void _OnBodyExited(Node2D body)
 	{
 		if (body is Player player)
 		{
-			player.platformCount--;
-			GD.Print("Player left turtle");
+			player.inWater = false;
+			GD.Print("Player out of water area");
 		}
 	}
 }

@@ -18,11 +18,11 @@ region = Rect2(32, 0, 32, 32)
 atlas = ExtResource("1_diba4")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f2r5w"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1l2iw"]
 atlas = ExtResource("1_diba4")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4lu78"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2r5w"]
 atlas = ExtResource("1_diba4")
 region = Rect2(128, 0, 32, 32)
 
@@ -37,15 +37,20 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xrtyu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f2r5w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4lu78")
 }],
 "loop": true,
 "name": &"default",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1l2iw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2r5w")
+}],
+"loop": true,
+"name": &"submerge",
 "speed": 3.0
 }]
 
@@ -57,5 +62,9 @@ shape = SubResource("RectangleShape2D_1l2iw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1426358817]
 sprite_frames = SubResource("SpriteFrames_bc3fs")
+animation = &"submerge"
 autoplay = "default"
-frame_progress = 0.11499406
+frame_progress = 0.20284799
+
+[connection signal="body_entered" from="." to="." method="_OnBodyEntered"]
+[connection signal="body_exited" from="." to="." method="_OnBodyExited"]

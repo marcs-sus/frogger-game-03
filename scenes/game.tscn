@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://do3r0chibfgab" path="res://scripts/Game.cs" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://dcckxfls82tch" path="res://assets/tiles.png" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://ct1c3pr1ynyxa" path="res://scenes/player.tscn" id="2_yqjtg"]
+[ext_resource type="Script" uid="uid://dqdjyqal7h2hr" path="res://scripts/WaterArea.cs" id="3_gee14"]
 [ext_resource type="PackedScene" uid="uid://bt77be0gv3oa6" path="res://scenes/obstacle_spawner.tscn" id="4_iywne"]
 [ext_resource type="PackedScene" uid="uid://bk2hwxp6m8ui7" path="res://scenes/obstacle_pool.tscn" id="4_p57ef"]
 [ext_resource type="PackedScene" uid="uid://bqnn2mlbxc2tj" path="res://scenes/vehicle.tscn" id="5_p57ef"]
@@ -47,9 +48,9 @@ shape = SubResource("RectangleShape2D_lnu2h")
 
 [node name="WaterArea" type="Area2D" parent="." unique_id=1804748784]
 position = Vector2(0, -80)
+script = ExtResource("3_gee14")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterArea" unique_id=794375352]
-visible = false
 shape = SubResource("RectangleShape2D_u5sy4")
 
 [node name="VehicleSpawners" type="Node" parent="." unique_id=1093845929]
@@ -104,6 +105,10 @@ ObstacleScene = ExtResource("6_u5sy4")
 PoolSize = 30
 
 [node name="Player" parent="." unique_id=2107113222 node_paths=PackedStringArray("WorldBorder", "WaterArea") instance=ExtResource("2_yqjtg")]
+z_index = 1
 position = Vector2(0, 208)
 WorldBorder = NodePath("../WorldBorder")
 WaterArea = NodePath("../WaterArea")
+
+[connection signal="body_entered" from="WaterArea" to="WaterArea" method="_OnBodyEntered"]
+[connection signal="body_exited" from="WaterArea" to="WaterArea" method="_OnBodyEntered"]

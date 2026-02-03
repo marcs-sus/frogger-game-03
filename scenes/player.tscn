@@ -1,13 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://ct1c3pr1ynyxa"]
+[gd_scene format=3 uid="uid://ct1c3pr1ynyxa"]
 
 [ext_resource type="Texture2D" uid="uid://s0iw11rwa8ku" path="res://assets/Frog.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://b8etwwoq1mgw0" path="res://scripts/Player.cs" id="1_g2els"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
-size = Vector2(32, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
-size = Vector2(32, 32)
+size = Vector2(30, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -52,18 +49,13 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=465468404]
 script = ExtResource("1_g2els")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1844432753]
 shape = SubResource("RectangleShape2D_ur7pv")
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_3vyb7")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=956973595]
 sprite_frames = SubResource("SpriteFrames_smehm")
 animation = &"hop"
 frame = 4
