@@ -27,7 +27,7 @@ sources/0 = SubResource("TileSetAtlasSource_lbhrr")
 size = Vector2(416, 448)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u5sy4"]
-size = Vector2(416, 160)
+size = Vector2(416, 158)
 
 [node name="Game" type="Node2D" unique_id=2015361136]
 script = ExtResource("1_uwrxv")
@@ -94,6 +94,12 @@ ObstaclePool = NodePath("../../Pools/TurtlesPool")
 ObstacleLength = 2
 SpawnDirection = 1
 
+[node name="TurtleSpawner3" parent="TurtleSpawner" unique_id=769065333 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+position = Vector2(-320, -48)
+ObstaclePool = NodePath("../../Pools/TurtlesPool")
+ObstacleLength = 2
+SpawnDirection = 1
+
 [node name="Pools" type="Node" parent="." unique_id=777411706]
 
 [node name="VehiclesPool" parent="Pools" unique_id=654960449 instance=ExtResource("4_p57ef")]
@@ -111,4 +117,4 @@ WorldBorder = NodePath("../WorldBorder")
 WaterArea = NodePath("../WaterArea")
 
 [connection signal="body_entered" from="WaterArea" to="WaterArea" method="_OnBodyEntered"]
-[connection signal="body_exited" from="WaterArea" to="WaterArea" method="_OnBodyEntered"]
+[connection signal="body_exited" from="WaterArea" to="WaterArea" method="_OnBodyExited"]

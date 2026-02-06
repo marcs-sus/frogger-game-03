@@ -21,8 +21,8 @@ public partial class Turtle : Obstacle
 		if (body is Player player)
 		{
 			player.platformCount++;
-			player.platformDirection = Direction;
-			player.platformSpeed = Speed;
+			player.currentPlatform = this;
+			player.Velocity = Direction.Normalized() * Speed;
 			GD.Print("Player moved onto turtle");
 		}
 	}
@@ -33,6 +33,10 @@ public partial class Turtle : Obstacle
 		if (body is Player player)
 		{
 			player.platformCount--;
+			if (player.currentPlatform == this)
+			{
+				player.currentPlatform = null;
+			}
 			GD.Print("Player left turtle");
 		}
 	}

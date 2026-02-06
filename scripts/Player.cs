@@ -12,8 +12,7 @@ public partial class Player : CharacterBody2D
 
 	private Vector2 targetPosition;
 	private bool isHopping = false;
-	public float platformSpeed = 0f;
-	public Vector2 platformDirection = Vector2.Zero;
+	public Obstacle currentPlatform = null;
 	public bool inWater = false;
 	public short platformCount = 0;
 
@@ -37,13 +36,20 @@ public partial class Player : CharacterBody2D
 				isHopping = false;
 		}
 		// Handle movement on platforms
-		else if (platformCount > 0)
+		else if (platformCount > 0 && currentPlatform != null)
 		{
 			// Move along with platform
-			Position += platformDirection.Normalized() * platformSpeed * (float)delta;
+			MoveAndSlide();
 		}
 		// Check for water death
 		else if (inWater)
+		{
+			GD.Print("Died");
+			Die();
+		}
+
+		// Check for out of bounds death
+		if (!WorldBorderRect.HasPoint(Position))
 		{
 			GD.Print("Died");
 			Die();
@@ -67,20 +73,26 @@ public partial class Player : CharacterBody2D
 
 	private void TryMove(Vector2 direction)
 	{
-		// Calculate new target position and rotation
+		// Calculate new target position
 		targetPosition = Position + direction * Globals.TILE_SIZE;
+
+		// If target isn't tile-aligned and not on a platform, snap to nearest tile
+		if (platformCount == 0 && targetPosition.X % Globals.TILE_SIZE != 0)
+			targetPosition.X = Mathf.Round(targetPosition.X / Globals.TILE_SIZE) * Globals.TILE_SIZE;
 
 		// Do not move outside world border
 		if (!WorldBorderRect.HasPoint(targetPosition))
 			return;
 
+		// Calculate rotation
 		Rotation = direction.Angle() + Mathf.Pi / 2;
-		//GD.Print("New Target: " + targetPosition);
 
 		// Play hop animation
 		animatedSprite.Play("hop");
 
 		isHopping = true;
+
+		//GD.Print("New Target: " + targetPosition);
 	}
 
 	public void Die()
