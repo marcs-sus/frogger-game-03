@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://csb66t5fcssh1"]
+
+[ext_resource type="Script" uid="uid://c254oqfejgnal" path="res://scripts/Log.cs" id="1_pt1ea"]
+[ext_resource type="Texture2D" uid="uid://cmw3iajmg6bhg" path="res://assets/log.png" id="1_spugk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvwyr"]
+size = Vector2(32, 32)
+
+[node name="Log" type="Area2D" unique_id=1838329239]
+script = ExtResource("1_pt1ea")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1111039996]
+shape = SubResource("RectangleShape2D_gvwyr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1978783505]
+texture = ExtResource("1_spugk")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[connection signal="body_entered" from="." to="." method="_OnBodyEntered"]
+[connection signal="body_exited" from="." to="." method="_OnBodyExited"]

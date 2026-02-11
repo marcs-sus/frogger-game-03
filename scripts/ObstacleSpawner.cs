@@ -45,27 +45,38 @@ public partial class ObstacleSpawner : Marker2D
 			// Spawn multiple obstacles
 			for (int i = 0; i < ObstacleLength; i++)
 			{
-				SpawnObstacle(Globals.TILE_SIZE * i);
+				Obstacle obstacle = SpawnObstacle(Globals.TILE_SIZE * i);
+
+				switch (obstacle)
+				{
+					case Log log:
+						// Change log sprite region based on the spawn order
+						if (i == 0) // First log
+							log.sprite.RegionRect = new Rect2(0, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
+						else if (i == ObstacleLength - 1) // Last log
+							log.sprite.RegionRect = new Rect2(Globals.TILE_SIZE * 2, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
+						break;
+				}
 			}
 
 			spawnTimer = SpawnInterval * ObstacleLength;
 		}
 	}
 
-	// Instantiate a new obstacle with the assigned scene
-	public void SpawnObstacle(float offset = 0f)
+	// Instantiate a new obstacle with the assigned scene and return it
+	public Obstacle SpawnObstacle(float offset = 0f)
 	{
 		if (ObstaclePool == null || ObstaclePool.pool.Count <= 0)
 		{
 			GD.PrintErr("Obstacle pool is not assigned or empty.");
-			return;
+			return null;
 		}
 
 		Obstacle obstacle = ObstaclePool.GetObstacle();
 		if (obstacle == null)
 		{
 			GD.PrintErr("Failed to instantiate obstacle.");
-			return;
+			return null;
 		}
 
 		// Set the obstacle's direction and ownership
@@ -75,6 +86,7 @@ public partial class ObstacleSpawner : Marker2D
 		obstacle.spawnerParent = this;
 
 		AddChild(obstacle);
+		return obstacle;
 	}
 
 	// Recycle an obstacle back to the pool

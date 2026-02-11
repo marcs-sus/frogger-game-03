@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bk2hwxp6m8ui7" path="res://scenes/obstacle_pool.tscn" id="4_p57ef"]
 [ext_resource type="PackedScene" uid="uid://bqnn2mlbxc2tj" path="res://scenes/vehicle.tscn" id="5_p57ef"]
 [ext_resource type="PackedScene" uid="uid://bco4y5epgtulq" path="res://scenes/turtle.tscn" id="6_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://csb66t5fcssh1" path="res://scenes/log.tscn" id="8_0tnpc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lbhrr"]
 texture = ExtResource("2_lnu2h")
@@ -94,10 +95,12 @@ ObstaclePool = NodePath("../../Pools/TurtlesPool")
 ObstacleLength = 2
 SpawnDirection = 1
 
-[node name="TurtleSpawner3" parent="TurtleSpawner" unique_id=769065333 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+[node name="LogCrocSpawner" type="Node" parent="." unique_id=147187446]
+
+[node name="LogSpawner" parent="LogCrocSpawner" unique_id=277349308 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(-320, -48)
-ObstaclePool = NodePath("../../Pools/TurtlesPool")
-ObstacleLength = 2
+ObstaclePool = NodePath("../../Pools/LogPool")
+ObstacleLength = 4
 SpawnDirection = 1
 
 [node name="Pools" type="Node" parent="." unique_id=777411706]
@@ -109,6 +112,10 @@ PoolSize = 40
 [node name="TurtlesPool" parent="Pools" unique_id=216685241 instance=ExtResource("4_p57ef")]
 ObstacleScene = ExtResource("6_u5sy4")
 PoolSize = 30
+
+[node name="LogPool" parent="Pools" unique_id=442039368 instance=ExtResource("4_p57ef")]
+ObstacleScene = ExtResource("8_0tnpc")
+PoolSize = 50
 
 [node name="Player" parent="." unique_id=2107113222 node_paths=PackedStringArray("WorldBorder", "WaterArea") instance=ExtResource("2_yqjtg")]
 z_index = 1
