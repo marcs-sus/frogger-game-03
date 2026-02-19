@@ -45,6 +45,7 @@ public partial class Turtle : Obstacle
 		isSubmerged = true;
 		collisionShape.Disabled = true;
 
+		// Play submerge animation
 		animatedSprite.Play("submerge");
 	}
 
@@ -54,6 +55,7 @@ public partial class Turtle : Obstacle
 		isSubmerged = false;
 		collisionShape.Disabled = false;
 
+		// Play default swimming animation
 		animatedSprite.Play("default");
 	}
 

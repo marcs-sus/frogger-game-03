@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bqnn2mlbxc2tj" path="res://scenes/vehicle.tscn" id="5_p57ef"]
 [ext_resource type="PackedScene" uid="uid://bco4y5epgtulq" path="res://scenes/turtle.tscn" id="6_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://csb66t5fcssh1" path="res://scenes/log.tscn" id="8_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://l3grp2jv1o2g" path="res://scenes/crocodile.tscn" id="9_vtaks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lbhrr"]
 texture = ExtResource("2_lnu2h")
@@ -54,54 +55,60 @@ script = ExtResource("3_gee14")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterArea" unique_id=794375352]
 shape = SubResource("RectangleShape2D_u5sy4")
 
-[node name="VehicleSpawners" type="Node" parent="." unique_id=1093845929]
+[node name="Spawners" type="Node" parent="." unique_id=990705011]
 
-[node name="VehicleSpawner1" parent="VehicleSpawners" unique_id=1152471115 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+[node name="VehicleSpawners" type="Node" parent="Spawners" unique_id=1093845929]
+
+[node name="VehicleSpawner1" parent="Spawners/VehicleSpawners" unique_id=1152471115 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(320, 176)
-ObstaclePool = NodePath("../../Pools/VehiclesPool")
+ObstaclePool = NodePath("../../../Pools/VehiclesPool")
 SpawnInterval = 5.0
 
-[node name="VehicleSpawner2" parent="VehicleSpawners" unique_id=152998907 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+[node name="VehicleSpawner2" parent="Spawners/VehicleSpawners" unique_id=152998907 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(320, 112)
-ObstaclePool = NodePath("../../Pools/VehiclesPool")
+ObstaclePool = NodePath("../../../Pools/VehiclesPool")
 SpawnInterval = 3.0
 
-[node name="VehicleSpawner3" parent="VehicleSpawners" unique_id=588473868 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+[node name="VehicleSpawner3" parent="Spawners/VehicleSpawners" unique_id=588473868 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(320, 48)
-ObstaclePool = NodePath("../../Pools/VehiclesPool")
+ObstaclePool = NodePath("../../../Pools/VehiclesPool")
 
-[node name="VehicleSpawner4" parent="VehicleSpawners" unique_id=61286348 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+[node name="VehicleSpawner4" parent="Spawners/VehicleSpawners" unique_id=61286348 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(-320, 144)
-ObstaclePool = NodePath("../../Pools/VehiclesPool")
+ObstaclePool = NodePath("../../../Pools/VehiclesPool")
 SpawnDirection = 1
 
-[node name="VehicleSpawner5" parent="VehicleSpawners" unique_id=512840393 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+[node name="VehicleSpawner5" parent="Spawners/VehicleSpawners" unique_id=512840393 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(-320, 80)
-ObstaclePool = NodePath("../../Pools/VehiclesPool")
+ObstaclePool = NodePath("../../../Pools/VehiclesPool")
 SpawnDirection = 1
 SpawnInterval = 4.0
 
-[node name="TurtleSpawner" type="Node" parent="." unique_id=402576961]
+[node name="TurtleSpawner" type="Node" parent="Spawners" unique_id=402576961]
 
-[node name="TurtleSpawner1" parent="TurtleSpawner" unique_id=852207157 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+[node name="TurtleSpawner1" parent="Spawners/TurtleSpawner" unique_id=852207157 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(320, -16)
-ObstaclePool = NodePath("../../Pools/TurtlesPool")
+ObstaclePool = NodePath("../../../Pools/TurtlesPool")
 ObstacleLength = 3
 SpawnInterval = 1.5
 
-[node name="TurtleSpawner2" parent="TurtleSpawner" unique_id=1764470670 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+[node name="TurtleSpawner2" parent="Spawners/TurtleSpawner" unique_id=1764470670 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(-320, -112)
-ObstaclePool = NodePath("../../Pools/TurtlesPool")
+ObstaclePool = NodePath("../../../Pools/TurtlesPool")
 ObstacleLength = 2
 SpawnDirection = 1
 
-[node name="LogCrocSpawner" type="Node" parent="." unique_id=147187446]
+[node name="LogCrocSpawner" type="Node" parent="Spawners" unique_id=147187446]
 
-[node name="LogSpawner" parent="LogCrocSpawner" unique_id=277349308 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+[node name="LogSpawner" parent="Spawners/LogCrocSpawner" unique_id=277349308 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
 position = Vector2(-320, -48)
-ObstaclePool = NodePath("../../Pools/LogPool")
+ObstaclePool = NodePath("../../../Pools/LogPool")
 ObstacleLength = 4
 SpawnDirection = 1
+
+[node name="CrocodileSpawner" parent="Spawners/LogCrocSpawner" unique_id=1476422662 node_paths=PackedStringArray("ObstaclePool") instance=ExtResource("4_iywne")]
+position = Vector2(320, -80)
+ObstaclePool = NodePath("../../../Pools/CrocodilePool")
 
 [node name="Pools" type="Node" parent="." unique_id=777411706]
 
@@ -116,6 +123,10 @@ PoolSize = 30
 [node name="LogPool" parent="Pools" unique_id=442039368 instance=ExtResource("4_p57ef")]
 ObstacleScene = ExtResource("8_0tnpc")
 PoolSize = 50
+
+[node name="CrocodilePool" parent="Pools" unique_id=1407615704 instance=ExtResource("4_p57ef")]
+ObstacleScene = ExtResource("9_vtaks")
+PoolSize = 20
 
 [node name="Player" parent="." unique_id=2107113222 node_paths=PackedStringArray("WorldBorder", "WaterArea") instance=ExtResource("2_yqjtg")]
 z_index = 1

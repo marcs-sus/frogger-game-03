@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://l3grp2jv1o2g"]
+
+[ext_resource type="Script" uid="uid://prcyc21qypwh" path="res://scripts/Crocodile.cs" id="1_rs0p7"]
+[ext_resource type="Texture2D" uid="uid://dft3cnje053ge" path="res://assets/Crocodile.png" id="2_36s23"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rs0p7"]
+size = Vector2(96, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_36s23"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ivdnp"]
+atlas = ExtResource("2_36s23")
+region = Rect2(0, 32, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d24gk"]
+atlas = ExtResource("2_36s23")
+region = Rect2(96, 32, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bumr2"]
+atlas = ExtResource("2_36s23")
+region = Rect2(0, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kregv"]
+atlas = ExtResource("2_36s23")
+region = Rect2(96, 0, 96, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_au85d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ivdnp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d24gk")
+}],
+"loop": true,
+"name": &"closed_mouth",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bumr2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kregv")
+}],
+"loop": true,
+"name": &"open_mouth",
+"speed": 2.0
+}]
+
+[node name="Crocodile" type="Area2D" unique_id=670936986]
+script = ExtResource("1_rs0p7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2116771117]
+shape = SubResource("RectangleShape2D_rs0p7")
+
+[node name="MouthArea" type="Area2D" parent="." unique_id=2136857023]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouthArea" unique_id=812387233]
+position = Vector2(32, 0)
+shape = SubResource("RectangleShape2D_36s23")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=522251698]
+sprite_frames = SubResource("SpriteFrames_au85d")
+animation = &"closed_mouth"
+autoplay = "closed_mouth"
+
+[connection signal="body_entered" from="." to="." method="_OnBodyEntered"]
+[connection signal="body_exited" from="." to="." method="_OnBodyExited"]
+[connection signal="body_entered" from="MouthArea" to="." method="_OnBodyEnteredMouth"]
