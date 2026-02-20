@@ -1,6 +1,5 @@
 using Godot;
-using Godot.Collections;
-//using System;
+using System;
 
 public enum Direction
 {
@@ -10,18 +9,25 @@ public enum Direction
 
 public partial class ObstacleSpawner : Marker2D
 {
-	[Export] public Array<ObstaclePool> ObstaclePools;
+	[Export] public ObstaclePool[] ObstaclePools;
 	[Export] public byte ObstacleLength = 1;
 	[Export] public float ObstacleSpeed = 50f;
 	[Export] public Direction SpawnDirection = Direction.Left;
 	[Export] public float SpawnInterval = 2.0f;
 	[Export] public float ObstaclesMaxLifetime = 15.0f;
 
+	private RandomNumberGenerator rand = new RandomNumberGenerator();
+	private float[] randomWeights;
 	private float spawnTimer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// Define random weights for obstacle pool selection
+		randomWeights = new float[ObstaclePools.Length];
+		for (int i = 0; i < ObstaclePools.Length; i++)
+			randomWeights[i] = GD.Randf();
+
 		spawnTimer = SpawnInterval;
 	}
 
@@ -35,7 +41,7 @@ public partial class ObstacleSpawner : Marker2D
 		if (spawnTimer <= 0)
 		{
 			// Pick a random obstacle pool
-			ObstaclePool randomPool = ObstaclePools.PickRandom();
+			ObstaclePool randomPool = ObstaclePools[rand.RandWeighted(randomWeights)];
 
 			// Spawn a single obstacle
 			if (ObstacleLength == 1)
