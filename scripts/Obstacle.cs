@@ -4,6 +4,7 @@ using System;
 public partial class Obstacle : Area2D
 {
     public ObstacleSpawner spawnerParent;
+    public ObstaclePool originPool;
     public Vector2 Direction = Vector2.Left;
     public float Speed = 50f;
     public float lifetime = 0f;
@@ -22,7 +23,7 @@ public partial class Obstacle : Area2D
         // Check if lifetime exceeded and recycle
         if (spawnerParent != null && lifetime >= spawnerParent.ObstaclesMaxLifetime)
         {
-            spawnerParent.RecycleObstacle(this);
+            spawnerParent.RecycleObstacle(originPool, this);
             return;
         }
 

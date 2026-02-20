@@ -16,6 +16,7 @@ public partial class ObstaclePool : Node
         for (int i = 0; i < PoolSize; i++)
         {
             Obstacle obstacle = ObstacleScene.Instantiate<Obstacle>();
+            obstacle.originPool = this;
             DeactivateObstacle(obstacle);
             pool.Enqueue(obstacle);
         }

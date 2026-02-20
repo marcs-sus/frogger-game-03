@@ -1,6 +1,6 @@
 using Godot;
-using System;
-using System.Net.Security;
+using Godot.Collections;
+//using System;
 
 public enum Direction
 {
@@ -10,7 +10,7 @@ public enum Direction
 
 public partial class ObstacleSpawner : Marker2D
 {
-	[Export] public ObstaclePool ObstaclePool;
+	[Export] public Array<ObstaclePool> ObstaclePools;
 	[Export] public byte ObstacleLength = 1;
 	[Export] public float ObstacleSpeed = 50f;
 	[Export] public Direction SpawnDirection = Direction.Left;
@@ -34,28 +34,38 @@ public partial class ObstacleSpawner : Marker2D
 		// Check if it's time to spawn a new obstacle
 		if (spawnTimer <= 0)
 		{
+			// Pick a random obstacle pool
+			ObstaclePool randomPool = ObstaclePools.PickRandom();
+
 			// Spawn a single obstacle
 			if (ObstacleLength == 1)
 			{
-				SpawnObstacle();
+				SpawnObstacle(randomPool);
 				spawnTimer = SpawnInterval;
-				return;
 			}
-
-			// Spawn multiple obstacles
-			for (int i = 0; i < ObstacleLength; i++)
+			else
 			{
-				Obstacle obstacle = SpawnObstacle(Globals.TILE_SIZE * i);
-
-				switch (obstacle)
+				// Spawn multiple obstacles
+				for (int i = 0; i < ObstacleLength; i++)
 				{
-					case Log log:
-						// Change log sprite region based on the spawn order
-						if (i == 0) // First log
-							log.sprite.RegionRect = new Rect2(0, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
-						else if (i == ObstacleLength - 1) // Last log
-							log.sprite.RegionRect = new Rect2(Globals.TILE_SIZE * 2, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
-						break;
+					// Spawn obstacle with offset based on its position in the sequence
+					Obstacle obstacle = SpawnObstacle(randomPool, Globals.TILE_SIZE * i);
+
+					switch (obstacle)
+					{
+						case Log log:
+							// Change log sprite region based on the spawn order
+							if (i == 0) // First log
+								log.sprite.RegionRect = new Rect2(0, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
+							else if (i == ObstacleLength - 1) // Last log
+								log.sprite.RegionRect = new Rect2(Globals.TILE_SIZE * 2, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
+							break;
+
+						case Crocodile:
+							// Crocodiles may only have a length of 1
+							i = ObstacleLength;
+							break;
+					}
 				}
 			}
 
@@ -64,15 +74,15 @@ public partial class ObstacleSpawner : Marker2D
 	}
 
 	// Instantiate a new obstacle with the assigned scene and return it
-	public Obstacle SpawnObstacle(float offset = 0f)
+	public Obstacle SpawnObstacle(ObstaclePool obstaclePool, float offset = 0f)
 	{
-		if (ObstaclePool == null || ObstaclePool.pool.Count <= 0)
+		if (obstaclePool == null || obstaclePool.pool.Count <= 0)
 		{
 			GD.PrintErr("Obstacle pool is not assigned or empty.");
 			return null;
 		}
 
-		Obstacle obstacle = ObstaclePool.GetObstacle();
+		Obstacle obstacle = obstaclePool.GetObstacle();
 		if (obstacle == null)
 		{
 			GD.PrintErr("Failed to instantiate obstacle.");
@@ -90,12 +100,12 @@ public partial class ObstacleSpawner : Marker2D
 	}
 
 	// Recycle an obstacle back to the pool
-	public void RecycleObstacle(Obstacle obstacle)
+	public void RecycleObstacle(ObstaclePool obstaclePool, Obstacle obstacle)
 	{
-		if (ObstaclePool != null)
+		if (obstaclePool != null)
 		{
 			RemoveChild(obstacle);
-			ObstaclePool.ReturnObstacle(obstacle);
+			obstaclePool.ReturnObstacle(obstacle);
 		}
 	}
 }
