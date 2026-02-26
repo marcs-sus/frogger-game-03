@@ -61,10 +61,18 @@ public partial class ObstacleSpawner : Marker2D
 					{
 						case Log log:
 							// Change log sprite region based on the spawn order
+							Rect2 firstLogRegion = new Rect2(0, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
+							Rect2 lastLogRegion = new Rect2(Globals.TILE_SIZE * 2, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
 							if (i == 0) // First log
-								log.sprite.RegionRect = new Rect2(0, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
+								if (obstacle.Direction == new Vector2((float)Direction.Left, 0))
+									log.sprite.RegionRect = firstLogRegion;
+								else
+									log.sprite.RegionRect = lastLogRegion;
 							else if (i == ObstacleLength - 1) // Last log
-								log.sprite.RegionRect = new Rect2(Globals.TILE_SIZE * 2, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
+								if (obstacle.Direction == new Vector2((float)Direction.Left, 0))
+									log.sprite.RegionRect = lastLogRegion;
+								else
+									log.sprite.RegionRect = firstLogRegion;
 							break;
 
 						case Crocodile:
@@ -96,8 +104,14 @@ public partial class ObstacleSpawner : Marker2D
 		}
 
 		// Set the obstacle's direction and ownership
-		obstacle.Position += new Vector2(offset, 0);
 		obstacle.Direction = new Vector2((float)SpawnDirection, 0);
+
+		// Flip the obstacle if it's moving to the right
+		// Note: Obstacles are designed to face left by default
+		if (obstacle.Direction == Vector2.Right)
+			obstacle.Scale = new Vector2(-1, 1);
+
+		obstacle.Position += new Vector2(offset, 0);
 		obstacle.Speed = ObstacleSpeed;
 		obstacle.spawnerParent = this;
 

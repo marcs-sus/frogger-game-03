@@ -59,7 +59,7 @@ shape = SubResource("RectangleShape2D_rs0p7")
 [node name="MouthArea" type="Area2D" parent="." unique_id=2136857023]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MouthArea" unique_id=812387233]
-position = Vector2(32, 0)
+position = Vector2(-32, 0)
 shape = SubResource("RectangleShape2D_36s23")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=522251698]
