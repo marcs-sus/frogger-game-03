@@ -4,6 +4,7 @@ using System;
 public partial class Game : Node2D
 {
 	[Export] public ulong GameSeed = 0;
+	[Export] public Vector2 PlayerStartPosition = new Vector2(0.0f, 208.0f);
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

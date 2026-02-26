@@ -4,16 +4,20 @@ using System;
 public partial class Player : CharacterBody2D
 {
 	[Export] private float Speed = 200f;
+	[Export] private double DeathDuration = 2.0;
+	[Export] public Game GameNode;
 	[Export] public Area2D WorldBorder;
 	[Export] public Area2D WaterArea;
 
 	private AnimatedSprite2D animatedSprite => GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 	private Rect2 WorldBorderRect => WorldBorder.GetNode<CollisionShape2D>("CollisionShape2D").GetShape().GetRect();
+	private CpuParticles2D deathParticles => GetNode<CpuParticles2D>("CPUParticles2D");
 
 	private Vector2 targetPosition;
 	private bool isHopping = false;
-	public Obstacle currentPlatform = null;
+	private bool isDead = false;
 	public bool inWater = false;
+	public Obstacle currentPlatform = null;
 	public short platformCount = 0;
 
 	// Called when the node enters the scene tree for the first time.
@@ -25,6 +29,17 @@ public partial class Player : CharacterBody2D
 	// Called every physics frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
+		// Handle death
+		if (isDead)
+		{
+			// Wait for death duration before respawning
+			DeathDuration -= delta;
+			if (DeathDuration <= 0)
+				Respawn();
+
+			return;
+		}
+
 		// Handle hopping movement
 		if (isHopping)
 		{
@@ -56,9 +71,10 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
+	// Called when a input event is received.
 	public override void _Input(InputEvent @event)
 	{
-		if (isHopping) return;
+		if (isDead || isHopping) return;
 
 		// Handle movement input
 		if (@event.IsActionPressed("up"))
@@ -71,8 +87,11 @@ public partial class Player : CharacterBody2D
 			TryMove(Vector2.Right);
 	}
 
+	// Attempt to move the player in the given direction
 	private void TryMove(Vector2 direction)
 	{
+		if (isDead) return;
+
 		// Calculate new target position
 		targetPosition = Position + direction * Globals.TILE_SIZE;
 
@@ -95,8 +114,35 @@ public partial class Player : CharacterBody2D
 		//GD.Print("New Target: " + targetPosition);
 	}
 
+	// Handle player death
 	public void Die()
 	{
-		QueueFree(); // Temporary
+		// Emit death particles
+		deathParticles.Emitting = true;
+
+		// Flag player as dead
+		isDead = true;
+
+		// Hide and disable player
+		animatedSprite.Hide();
+		isHopping = false;
+		inWater = false;
+		platformCount = 0;
+		currentPlatform = null;
+	}
+
+	// Reset player states and position for respawn
+	public void Respawn()
+	{
+		// Reset death state and duration
+		isDead = false;
+		DeathDuration = 2.0;
+
+		// Reset positions
+		Position = GameNode.PlayerStartPosition;
+		targetPosition = Position;
+
+		// Show player
+		animatedSprite.Show();
 	}
 }

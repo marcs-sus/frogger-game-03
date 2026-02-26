@@ -129,9 +129,10 @@ PoolSize = 100
 ObstacleScene = ExtResource("9_vtaks")
 PoolSize = 20
 
-[node name="Player" parent="." unique_id=2107113222 node_paths=PackedStringArray("WorldBorder", "WaterArea") instance=ExtResource("2_yqjtg")]
+[node name="Player" parent="." unique_id=2107113222 node_paths=PackedStringArray("GameNode", "WorldBorder", "WaterArea") instance=ExtResource("2_yqjtg")]
 z_index = 1
 position = Vector2(0, 208)
+GameNode = NodePath("..")
 WorldBorder = NodePath("../WorldBorder")
 WaterArea = NodePath("../WaterArea")
 
