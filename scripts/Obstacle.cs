@@ -6,7 +6,7 @@ public partial class Obstacle : Area2D
     public ObstacleSpawner spawnerParent;
     public ObstaclePool originPool;
     public Vector2 Direction = Vector2.Left;
-    public float Speed = 50f;
+    public float Speed;
     public float lifetime = 0f;
 
     // Called when the node enters the scene tree for the first time.
@@ -37,7 +37,6 @@ public partial class Obstacle : Area2D
     {
         spawnerParent = null;
         Direction = Vector2.Left;
-        Speed = 50f;
         lifetime = 0f;
         Position = Vector2.Zero;
     }

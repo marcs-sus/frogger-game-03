@@ -1,24 +1,18 @@
 using Godot;
 using System;
 
-public enum Direction
-{
-	Right = 1,
-	Left = -1,
-}
-
 public partial class ObstacleSpawner : Marker2D
 {
 	[Export] public ObstaclePool[] ObstaclePools;
 	[Export] public byte ObstacleLength = 1;
 	[Export] public float ObstacleSpeed = 50f;
-	[Export] public Direction SpawnDirection = Direction.Left;
-	[Export] public float SpawnInterval = 2.0f;
-	[Export] public float ObstaclesMaxLifetime = 15.0f;
+	[Export] public Vector2 SpawnDirection = Vector2.Left;
+	[Export] public double SpawnInterval = 2.0f;
+	[Export] public double ObstaclesMaxLifetime = 15.0f;
 
 	private RandomNumberGenerator rand = new RandomNumberGenerator();
 	private float[] randomWeights;
-	private float spawnTimer;
+	private double spawnTimer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -35,7 +29,7 @@ public partial class ObstacleSpawner : Marker2D
 	public override void _Process(double delta)
 	{
 		// Update spawn timer
-		spawnTimer -= (float)delta;
+		spawnTimer -= delta;
 
 		// Check if it's time to spawn a new obstacle
 		if (spawnTimer <= 0)
@@ -59,20 +53,12 @@ public partial class ObstacleSpawner : Marker2D
 
 					switch (obstacle)
 					{
+						case Vehicle vehicle:
+							//vehicle.Initialize();
+							break;
+
 						case Log log:
-							// Change log sprite region based on the spawn order
-							Rect2 firstLogRegion = new Rect2(0, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
-							Rect2 lastLogRegion = new Rect2(Globals.TILE_SIZE * 2, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
-							if (i == 0) // First log
-								if (obstacle.Direction == new Vector2((float)Direction.Left, 0))
-									log.sprite.RegionRect = firstLogRegion;
-								else
-									log.sprite.RegionRect = lastLogRegion;
-							else if (i == ObstacleLength - 1) // Last log
-								if (obstacle.Direction == new Vector2((float)Direction.Left, 0))
-									log.sprite.RegionRect = lastLogRegion;
-								else
-									log.sprite.RegionRect = firstLogRegion;
+							log.Initialize(ObstacleLength, i);
 							break;
 
 						case Crocodile:
@@ -104,7 +90,7 @@ public partial class ObstacleSpawner : Marker2D
 		}
 
 		// Set the obstacle's direction and ownership
-		obstacle.Direction = new Vector2((float)SpawnDirection, 0);
+		obstacle.Direction = SpawnDirection;
 
 		// Flip the obstacle if it's moving to the right
 		// Note: Obstacles are designed to face left by default

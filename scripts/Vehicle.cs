@@ -1,10 +1,19 @@
 using Godot;
 using System;
 
+public enum VehicleType
+{
+	Car = 1,
+	SportsCar = 2,
+	Truck = 3,
+	Motorcycle = 4,
+}
+
 public partial class Vehicle : Obstacle
 {
 	private Sprite2D sprite => GetNode<Sprite2D>("Sprite2D");
-	private string type = "Car1";
+
+	private VehicleType type = VehicleType.Car;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -18,11 +27,10 @@ public partial class Vehicle : Obstacle
 		base._Process(delta);
 	}
 
-	// Initialize the vehicle with type and direction
-	public void Initialize(string vehicleType, Vector2 direction)
+	// Initialize the vehicle with its type
+	public void Initialize(VehicleType vehicleType)
 	{
-		type = vehicleType;
-		Direction = direction.Normalized();
+		// TODO
 	}
 
 	// Kill player if its body enters the vehicle area

@@ -138,8 +138,9 @@ public partial class Player : CharacterBody2D
 		isDead = false;
 		DeathDuration = 2.0;
 
-		// Reset positions
+		// Reset positions and rotation
 		Position = GameNode.PlayerStartPosition;
+		Rotation = 0;
 		targetPosition = Position;
 
 		// Show player

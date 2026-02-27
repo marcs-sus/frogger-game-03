@@ -17,6 +17,25 @@ public partial class Log : Obstacle
 		base._Process(delta);
 	}
 
+	// Initialize the log with its length and spawn order
+	public void Initialize(int logLength, int lengthIndex)
+	{
+		// Change log sprite region based on the spawn order
+		Rect2 firstLogRegion = new Rect2(0, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
+		Rect2 lastLogRegion = new Rect2(Globals.TILE_SIZE * 2, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
+
+		if (lengthIndex == 0) // First log
+			if (Direction == Vector2.Left)
+				sprite.RegionRect = firstLogRegion;
+			else
+				sprite.RegionRect = lastLogRegion;
+		else if (lengthIndex == logLength - 1) // Last log
+			if (Direction == Vector2.Left)
+				sprite.RegionRect = lastLogRegion;
+			else
+				sprite.RegionRect = firstLogRegion;
+	}
+
 	// Check if player is on log
 	private void _OnBodyEntered(Node2D body)
 	{
