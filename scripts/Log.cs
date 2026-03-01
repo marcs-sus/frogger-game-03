@@ -21,19 +21,16 @@ public partial class Log : Obstacle
 	public void Initialize(int logLength, int lengthIndex)
 	{
 		// Change log sprite region based on the spawn order
-		Rect2 firstLogRegion = new Rect2(0, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
-		Rect2 lastLogRegion = new Rect2(Globals.TILE_SIZE * 2, 0, Globals.TILE_SIZE, Globals.TILE_SIZE);
-
 		if (lengthIndex == 0) // First log
 			if (Direction == Vector2.Left)
-				sprite.RegionRect = firstLogRegion;
+				sprite.RegionRect = Globals.FIRST_LOG_REGION;
 			else
-				sprite.RegionRect = lastLogRegion;
+				sprite.RegionRect = Globals.LAST_LOG_REGION;
 		else if (lengthIndex == logLength - 1) // Last log
 			if (Direction == Vector2.Left)
-				sprite.RegionRect = lastLogRegion;
+				sprite.RegionRect = Globals.LAST_LOG_REGION;
 			else
-				sprite.RegionRect = firstLogRegion;
+				sprite.RegionRect = Globals.FIRST_LOG_REGION;
 	}
 
 	// Check if player is on log
