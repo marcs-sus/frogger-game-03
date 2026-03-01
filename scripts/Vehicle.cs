@@ -13,7 +13,7 @@ public partial class Vehicle : Obstacle
 {
 	private Sprite2D sprite => GetNode<Sprite2D>("Sprite2D");
 
-	private VehicleType type = VehicleType.Car;
+	public VehicleType type = VehicleType.Car;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -30,7 +30,22 @@ public partial class Vehicle : Obstacle
 	// Initialize the vehicle with its type
 	public void Initialize(VehicleType vehicleType)
 	{
-		// TODO
+		type = vehicleType;
+		switch (type)
+		{
+			case VehicleType.Car:
+				sprite.RegionRect = Globals.CAR_REGION;
+				break;
+			case VehicleType.SportsCar:
+				sprite.RegionRect = Globals.SPORTS_CAR_REGION;
+				break;
+			case VehicleType.Truck:
+				sprite.RegionRect = Globals.TRUCK_REGION;
+				break;
+			case VehicleType.Motorcycle:
+				sprite.RegionRect = Globals.MOTORCYCLE_REGION;
+				break;
+		}
 	}
 
 	// Kill player if its body enters the vehicle area

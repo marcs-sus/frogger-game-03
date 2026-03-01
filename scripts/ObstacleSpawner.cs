@@ -40,12 +40,18 @@ public partial class ObstacleSpawner : Marker2D
 			// Spawn a single obstacle
 			if (ObstacleLength == 1)
 			{
-				SpawnObstacle(randomPool);
-				spawnTimer = SpawnInterval;
+				Obstacle obstacle = SpawnObstacle(randomPool);
+
+				switch (obstacle)
+				{
+					case Vehicle vehicle:
+						vehicle.Initialize((VehicleType)GD.RandRange(1, Enum.GetNames(typeof(VehicleType)).Length));
+						break;
+				}
 			}
+			// Spawn multiple obstacles
 			else
 			{
-				// Spawn multiple obstacles
 				for (int i = 0; i < ObstacleLength; i++)
 				{
 					// Spawn obstacle with offset based on its position in the sequence
@@ -53,17 +59,12 @@ public partial class ObstacleSpawner : Marker2D
 
 					switch (obstacle)
 					{
-						case Vehicle vehicle:
-							//vehicle.Initialize();
-							break;
-
 						case Log log:
 							log.Initialize(ObstacleLength, i);
 							break;
 
 						case Crocodile:
-							// Crocodiles may only have a length of 1
-							i = ObstacleLength;
+							i = ObstacleLength; // Crocodiles may only have a length of 1
 							break;
 					}
 				}
