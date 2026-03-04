@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://n6locl8da41j"]
+
+[ext_resource type="Script" uid="uid://bpu8e4drftk0p" path="res://scripts/Lillypad.cs" id="1_8tdai"]
+[ext_resource type="Texture2D" uid="uid://s0iw11rwa8ku" path="res://assets/Frog.png" id="2_0clm6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_44xkx"]
+size = Vector2(32, 32)
+
+[node name="Lillypad" type="Area2D" unique_id=987248062]
+script = ExtResource("1_8tdai")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1751849925]
+shape = SubResource("RectangleShape2D_44xkx")
+
+[node name="FrogSprite" type="Sprite2D" parent="." unique_id=1568509423]
+visible = false
+rotation = 3.1415927
+texture = ExtResource("2_0clm6")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[connection signal="body_entered" from="." to="." method="_OnBodyEntered"]
+[connection signal="body_exited" from="." to="." method="_OnBodyExited"]

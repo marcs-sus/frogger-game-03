@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ct1c3pr1ynyxa" path="res://scenes/player.tscn" id="2_yqjtg"]
 [ext_resource type="Script" uid="uid://dqdjyqal7h2hr" path="res://scripts/WaterArea.cs" id="3_gee14"]
 [ext_resource type="PackedScene" uid="uid://bt77be0gv3oa6" path="res://scenes/obstacle_spawner.tscn" id="4_iywne"]
+[ext_resource type="PackedScene" uid="uid://n6locl8da41j" path="res://scenes/lillypad.tscn" id="4_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://bk2hwxp6m8ui7" path="res://scenes/obstacle_pool.tscn" id="4_p57ef"]
 [ext_resource type="PackedScene" uid="uid://bqnn2mlbxc2tj" path="res://scenes/vehicle.tscn" id="5_p57ef"]
 [ext_resource type="PackedScene" uid="uid://bco4y5epgtulq" path="res://scenes/turtle.tscn" id="6_u5sy4"]
@@ -54,6 +55,23 @@ script = ExtResource("3_gee14")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterArea" unique_id=794375352]
 shape = SubResource("RectangleShape2D_u5sy4")
+
+[node name="Lillypads" type="Node" parent="." unique_id=822449699]
+
+[node name="Lillypad1" parent="Lillypads" unique_id=987248062 instance=ExtResource("4_kvpfn")]
+position = Vector2(-128, -176)
+
+[node name="Lillypad2" parent="Lillypads" unique_id=1742883792 instance=ExtResource("4_kvpfn")]
+position = Vector2(-64, -176)
+
+[node name="Lillypad3" parent="Lillypads" unique_id=545552043 instance=ExtResource("4_kvpfn")]
+position = Vector2(0, -176)
+
+[node name="Lillypad4" parent="Lillypads" unique_id=995286608 instance=ExtResource("4_kvpfn")]
+position = Vector2(64, -176)
+
+[node name="Lillypad5" parent="Lillypads" unique_id=1459849456 instance=ExtResource("4_kvpfn")]
+position = Vector2(128, -176)
 
 [node name="Spawners" type="Node" parent="." unique_id=990705011]
 
@@ -110,6 +128,12 @@ SpawnDirection = Vector2(1, 0)
 position = Vector2(320, -80)
 ObstaclePools = [NodePath("../../../Pools/LogPool"), NodePath("../../../Pools/CrocodilePool")]
 ObstacleLength = 3
+
+[node name="LogCrocSpawner3" parent="Spawners/LogCrocSpawners" unique_id=2112869741 node_paths=PackedStringArray("ObstaclePools") instance=ExtResource("4_iywne")]
+position = Vector2(320, -144)
+ObstaclePools = [NodePath("../../../Pools/LogPool"), NodePath("../../../Pools/CrocodilePool")]
+ObstacleLength = 4
+ObstacleSpeed = 60.0
 
 [node name="Pools" type="Node" parent="." unique_id=777411706]
 

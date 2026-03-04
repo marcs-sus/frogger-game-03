@@ -67,7 +67,6 @@ frame_progress = 1.0
 [node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1549318068]
 emitting = false
 amount = 30
-lifetime = 2.0
 one_shot = true
 explosiveness = 1.0
 emission_shape = 6
