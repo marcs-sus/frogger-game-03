@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using static Globals;
 
 public partial class Player : CharacterBody2D
 {
@@ -94,11 +95,11 @@ public partial class Player : CharacterBody2D
         if (isRespawning) return;
 
         // Calculate new target position
-        targetPosition = Position + direction * Globals.TILE_SIZE;
+        targetPosition = Position + direction * TILE_SIZE;
 
         // If target isn't tile-aligned and not on a platform, snap to nearest tile
-        if (platformCount == 0 && targetPosition.X % Globals.TILE_SIZE != 0)
-            targetPosition.X = Mathf.Round(targetPosition.X / Globals.TILE_SIZE) * Globals.TILE_SIZE;
+        if (platformCount == 0 && targetPosition.X % TILE_SIZE != 0)
+            targetPosition.X = Mathf.Round(targetPosition.X / TILE_SIZE) * TILE_SIZE;
 
         // Do not move outside world border
         if (!WorldBorderRect.HasPoint(targetPosition))

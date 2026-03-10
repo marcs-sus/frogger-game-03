@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using static Globals;
 
 public partial class Ui : Control
 {
@@ -12,7 +13,7 @@ public partial class Ui : Control
     public override void _Ready()
     {
         scoreLabel.Text = "SCORE: 00000";
-        livesCounter.Size = new Vector2(Globals.TILE_SIZE * GameNode.PlayerLives, Globals.TILE_SIZE);
+        livesCounter.Size = new Vector2(TILE_SIZE * GameNode.PlayerLives, TILE_SIZE);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,6 +30,6 @@ public partial class Ui : Control
     // Update lives display counter
     public void UpdateLivesDisplay(int lives)
     {
-        livesCounter.Size = new Vector2(Globals.TILE_SIZE * lives, Globals.TILE_SIZE);
+        livesCounter.Size = new Vector2(TILE_SIZE * lives, TILE_SIZE);
     }
 }

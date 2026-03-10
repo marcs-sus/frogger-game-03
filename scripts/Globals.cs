@@ -14,4 +14,5 @@ public static class Globals
     public static readonly Rect2 SPORTS_CAR_REGION = new Rect2(TILE_SIZE, 0.0f, TILE_SIZE, TILE_SIZE);
     public static readonly Rect2 TRUCK_REGION = new Rect2(0.0f, TILE_SIZE, TILE_SIZE, TILE_SIZE);
     public static readonly Rect2 MOTORCYCLE_REGION = new Rect2(TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE);
+
 }
