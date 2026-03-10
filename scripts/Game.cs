@@ -3,18 +3,27 @@ using System;
 
 public partial class Game : Node2D
 {
-	[Export] public ulong GameSeed = 0;
-	[Export] public Vector2 PlayerStartPosition = new Vector2(0.0f, 208.0f);
+    [Export] public ulong GameSeed = 0;
+    [Export] public Vector2 PlayerStartPosition = new Vector2(0.0f, 208.0f);
+    [Export] public byte PlayerLives = 3;
+    [Export] public Ui UiNode;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		// Set game seed
-		GD.Seed(GameSeed);
-	}
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
+        // Set game seed
+        GD.Seed(GameSeed);
+    }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
+    {
+    }
+
+    // Update lives counter and display
+    public void UpdateLives()
+    {
+        PlayerLives--;
+        UiNode.UpdateLivesDisplay(PlayerLives);
+    }
 }

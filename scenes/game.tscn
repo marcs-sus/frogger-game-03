@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://bco4y5epgtulq" path="res://scenes/turtle.tscn" id="6_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://csb66t5fcssh1" path="res://scenes/log.tscn" id="8_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://l3grp2jv1o2g" path="res://scenes/crocodile.tscn" id="9_vtaks"]
+[ext_resource type="Texture2D" uid="uid://s0iw11rwa8ku" path="res://assets/Frog.png" id="12_dinhu"]
+[ext_resource type="Script" uid="uid://bjx8l40lv2oup" path="res://scripts/Ui.cs" id="12_kvuet"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lbhrr"]
 texture = ExtResource("2_lnu2h")
@@ -32,8 +34,10 @@ size = Vector2(416, 448)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u5sy4"]
 size = Vector2(416, 158)
 
-[node name="Game" type="Node2D" unique_id=2015361136]
+[node name="Game" type="Node2D" unique_id=2015361136 node_paths=PackedStringArray("UiNode")]
 script = ExtResource("1_uwrxv")
+PlayerLives = 5
+UiNode = NodePath("UI")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=96868806]
 position = Vector2(0, -32)
@@ -159,6 +163,35 @@ position = Vector2(0, 208)
 GameNode = NodePath("..")
 WorldBorder = NodePath("../WorldBorder")
 WaterArea = NodePath("../WaterArea")
+
+[node name="UI" type="Control" parent="." unique_id=1438966182 node_paths=PackedStringArray("GameNode")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("12_kvuet")
+GameNode = NodePath("..")
+
+[node name="ScoreLabel" type="Label" parent="UI" unique_id=1432623388]
+layout_mode = 0
+offset_left = 96.0
+offset_top = -288.0
+offset_right = 208.0
+offset_bottom = -256.0
+text = "SCORE: 00000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LivesCounter" type="TextureRect" parent="UI" unique_id=435780566]
+texture_repeat = 2
+layout_mode = 0
+offset_left = -208.0
+offset_top = -288.0
+offset_right = -112.0
+offset_bottom = -256.0
+texture = ExtResource("12_dinhu")
+expand_mode = 2
+stretch_mode = 1
 
 [connection signal="body_entered" from="WaterArea" to="WaterArea" method="_OnBodyEntered"]
 [connection signal="body_exited" from="WaterArea" to="WaterArea" method="_OnBodyExited"]

@@ -118,6 +118,9 @@ public partial class Player : CharacterBody2D
     // Handle player death
     public void Die()
     {
+        // Subtract player lives counter
+        GameNode.UpdateLives();
+
         // Emit death particles
         deathParticles.Emitting = true;
 
